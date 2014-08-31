@@ -1,0 +1,3 @@
+axa_whapi_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: AxaWhapiBundle:Default:index }
