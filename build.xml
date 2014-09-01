@@ -3,7 +3,7 @@
     <property name="build" location="${basedir}/app/build"/>
 
     <target name="build" depends="prepare" />
-    <target name="validation" depends="prepare,lint,phpunit, phploc, phpcs, twig-lint" />
+    <target name="validation" depends="prepare,lint,phpunit, phploc, twig-lint" />
 
     <target name="clean" description="Cleanup build artifacts">
         <delete dir="${build}" />
