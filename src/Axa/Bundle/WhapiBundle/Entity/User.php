@@ -2,6 +2,7 @@
 
 namespace Axa\Bundle\WhapiBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,16 +25,27 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="uid", type="string", length=255)
+     * @ORM\Column(name="uid", type="string", unique=true, length=255)
      */
     private $uid;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", unique=true, length=255)
      */
     private $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Platform", mappedBy="user")
+     */
+    protected $platforms;
+
+
+    public function __construct()
+    {
+        $this->platforms = new ArrayCollection();
+    }
 
 
     /**
