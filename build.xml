@@ -1,0 +1,119 @@
+<project name="Axa Web Hosting Pass API" default="build">
+
+    <property name="build" location="${basedir}/app/build"/>
+
+    <target name="build" depends="prepare" />
+    <target name="validation" depends="prepare,lint,phpunit, phploc, phpcs, twig-lint" />
+
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${build}" />
+    </target>
+
+    <target name="prepare" depends="clean, init" description="Prepare for build">
+        <mkdir dir="${build}"/>
+        <mkdir dir="${build}/reports"/>
+        <mkdir dir="${build}/reports/coverage"/>
+        <mkdir dir="${build}/logs"/>
+    </target>
+
+    <target name="init-composer" description="Init composer component">
+        <exec executable="curl" failonerror="false">
+            <arg value="-sO" />
+            <arg value="http://getcomposer.org/composer.phar" />
+        </exec>
+        <exec executable="chmod" failonerror="false">
+            <arg value="+x" />
+            <arg value="./composer.phar" />
+            <!--  Voir désactivation des scripts sauf pour behat ? -->
+        </exec>
+    </target>
+
+    <target name="init" description="e" depends="init-composer">
+
+        <exec executable="cp" failonerror="true">
+            <arg path="app/config/parameters.yml.dist" />
+            <arg path="app/config/parameters.yml" />
+        </exec>
+
+        <exec executable="./composer.phar" failonerror="true">
+            <arg value="install" />
+            <arg value="--prefer-dist" />
+            <arg value="--no-interaction" />
+        </exec>
+        <exec executable="chmod">
+            <arg value="-R" />
+            <arg value="777" />
+            <arg value="app/cache" />
+            <arg value="app/logs" />
+            <arg value="web/bundles" />
+        </exec>
+    </target>
+
+    <target name="lint" description="Check PHP code for syntax errors">
+        <exec executable="sh" failonerror="true">
+            <arg value="-c" />
+            <arg value="find app src web -iname *.php | xargs -l1 php -l"/>
+        </exec>
+    </target>
+
+
+    <target name="twig-lint" description="Check Views Twig syntax">
+        <exec executable="app/console" failonerror="true">
+            <arg value="twig:lint"/>
+            <arg value="app/Resources"/>
+        </exec>
+        <exec executable="app/console" failonerror="true">
+            <arg value="twig:lint"/>
+            <arg value="src"/>
+        </exec>
+    </target>
+
+    <target name="phpunit" description="Run unit tests with PHPUnit" depends="prepare">
+        <exec executable="bin/phpunit" failonerror="true">
+            <arg value="--coverage-html"/>
+            <arg path="${build}/reports/coverage/"/>
+            <arg value="--testdox-html"/>
+            <arg path="${build}/logs/textdox.html"/>
+            <arg value="--coverage-clover"/>
+            <arg path="${build}/logs/phpunit.coverage.xml"/>
+            <arg value="--log-junit"/>
+            <arg path="${build}/logs/phpunit.xml"/>
+            <arg value="-c"/>
+            <arg path="${basedir}/app/"/>
+            <arg value="-v"/>
+        </exec>
+    </target>
+
+    <target name="phpmd" depends="prepare" description="Perform project mess detection using PHPMD">
+        <exec executable="bin/phpmd" failonerror="false">
+            <arg value="--reportfile" />
+            <arg value="${build}/reports/phpmd.html" />
+            <arg value="application,library,public" />
+            <arg value="html" />
+            <arg value="phpmd.xml" />
+        </exec>
+    </target>
+
+    <target name="phploc" description="Measure project size using PHPLOC">
+        <exec executable="bin/phploc">
+            <arg value="--log-csv" />
+            <arg value="${build}/logs/phploc.csv" />
+            <arg path="application" />
+            <arg path="library" />
+        </exec>
+    </target>
+
+    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer">
+        <exec executable="bin/phpcs" failonerror="true">
+            <arg value="--report=full" />
+            <arg value="--report=source" />
+            <arg value="--standard=${basedir}/phpcs.xml" />
+            <arg value="--extensions=php" />
+            <arg value="-p" />
+            <arg value="app/AppKernel.php" />
+            <arg value="src" />
+            <arg value="web" />
+        </exec>
+    </target>
+
+</project>

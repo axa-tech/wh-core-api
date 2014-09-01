@@ -2,6 +2,7 @@
 /app/cache/*
 /app/logs/*
 /build/
+app/build/
 /vendor/
 /bin/
 /composer.phar

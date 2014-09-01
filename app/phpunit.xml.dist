@@ -14,7 +14,7 @@
     bootstrap                   = "autoload.php" >
 
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="Axa Web Hosting Pass Test Suite">
             <directory>../src/*/*Bundle/Tests</directory>
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
         </testsuite>
@@ -37,5 +37,10 @@
             </exclude>
         </whitelist>
     </filter>
+
+    <logging>
+        <log type="coverage-html" target="app/build/reports/coverage" charset="UTF-8" yui="true"
+             highlight="true" lowUpperBound="60" highLowerBound="80" />
+    </logging>
 
 </phpunit>

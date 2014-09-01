@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Extranet Rules">
+    <description>Suite Stockage Cloud coding standards</description>
+    <!-- <exclude-pattern>*.phtml</exclude-pattern> -->
+    <rule ref="PSR1" />
+    <rule ref="PSR2" />
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <exclude-pattern>app/AppKernel.php</exclude-pattern>
+    </rule>
+    <!-- Le dossier application/ n'est pas sous namespace ni CamelCase classes : -->
+    <!-- <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+    <exclude-pattern>application/*.php</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+    <exclude-pattern>application/*.php</exclude-pattern>
+    </rule>
+    Les Bootstrap ont des méthodes commençant par un underscore :
+    <rule ref="Generic.NamingConventions.CamelCapsFunctionName.ScopeNotCamelCaps">
+    <exclude-pattern>*/Bootstrap.php</exclude-pattern>
+    </rule>
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+    <exclude-pattern>*/Bootstrap.php</exclude-pattern>
+    </rule>
+    Les features sont hors namespace tout comme l'application et les notations peuvent être longues
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+    <exclude-pattern>features/*.php</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Files.LineLength.TooLong">
+    <exclude-pattern>features/*.php</exclude-pattern>
+    </rule>
+    Les fichiers d'entrées et de bootstrap sont SideEffect (???)
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+    <exclude-pattern>*/bootstrap.php</exclude-pattern>
+    <exclude-pattern>*/application.php</exclude-pattern>
+    </rule>
+    Les scripts de migration possèdent des requêtes SQL générées, susceptibles d'être très longues
+    <rule ref="Generic.Files.LineLength.TooLong">
+    <exclude-pattern>*/DoctrineMigration/Version*.php</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Files.LineLength.MaxExceeded">
+    <exclude-pattern>*/DoctrineMigration/Version*.php</exclude-pattern>
+    </rule>
+    On décide d'avoir une certaine tolérance
+    <rule ref="Generic.NamingConventions.CamelCapsFunctionName">
+    <properties>
+    <property name="strict" value="false"/>
+    </properties>
+    </rule>-->
+</ruleset>
