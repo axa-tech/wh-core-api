@@ -29,6 +29,12 @@ class Platform
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Offer", inversedBy="platforms")
+     * @ORM\JoinColumn(name="offer_id", referencedColumnName="id", nullable=false)
+     */
+    private $offer;
+
 
     /**
      * @ORM\OneToMany(targetEntity="Vm", mappedBy="platform")
@@ -83,5 +89,25 @@ class Platform
     public function getVirtualMachines()
     {
         return $this->virtualMachines;
+    }
+
+    /**
+     * Set offer
+     *
+     * @param Offer $offer
+     */
+    public function setOffer(Offer $offer)
+    {
+        $this->offer = $offer;
+    }
+
+    /**
+     * Get offer
+     *
+     * @return Offer
+     */
+    public function getOffer()
+    {
+        return $this->offer;
     }
 }

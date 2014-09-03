@@ -2,6 +2,7 @@
 
 namespace Axa\Bundle\WhapiBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -77,5 +78,23 @@ class Vm
     public function getMetadata()
     {
         return $this->metadata;
+    }
+
+    /**
+     * Returns the Vm's metadata
+     *
+     * @return array
+     */
+    public function getMetadataToArray()
+    {
+        $metadata = $this->getMetadata()->toArray();
+        $response = array();
+        foreach($metadata as $m){
+
+            $response[] = $m->toArray();
+
+        }
+
+        return $response;
     }
 }

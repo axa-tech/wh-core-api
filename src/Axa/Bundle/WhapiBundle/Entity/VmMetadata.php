@@ -120,4 +120,24 @@ class VmMetadata
     {
         return $this->value;
     }
+
+    /**
+     * Displays the name and value properties
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name . " : " . $this->value;
+    }
+
+    /**
+     * Returns the name and value properties in an array format
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return array("name" => $this->name, "value" => $this->value);
+    }
 }
