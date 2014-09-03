@@ -2,12 +2,13 @@
 
 namespace Axa\Bundle\WhapiBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Platform
  *
- * @ORM\Table()
+ * @ORM\Table(name="platform")
  * @ORM\Entity(repositoryClass="Axa\Bundle\WhapiBundle\Entity\PlatformRepository")
  */
 class Platform
@@ -36,6 +37,16 @@ class Platform
     private $user;
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="Vm", mappedBy="platform")
+     */
+    private $virtualMachines;
+
+
+    public function __construct()
+    {
+        $this->virtualMachines = new ArrayCollection();
+    }
 
 
     /**
@@ -92,5 +103,15 @@ class Platform
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Get virtualMachines
+     *
+     * @return ArrayCollection
+     */
+    public function getVirtualMachines()
+    {
+        return $this->virtualMachines;
     }
 }

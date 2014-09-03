@@ -39,7 +39,7 @@ class User
     /**
      * @ORM\OneToMany(targetEntity="Platform", mappedBy="user")
      */
-    protected $platforms;
+    private $platforms;
 
 
     public function __construct()
@@ -102,5 +102,15 @@ class User
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Get platforms
+     *
+     * @return ArrayCollection
+     */
+    public function getPlatforms()
+    {
+        return $this->platforms;
     }
 }
