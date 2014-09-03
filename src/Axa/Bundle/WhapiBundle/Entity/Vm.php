@@ -23,9 +23,20 @@ class Vm
 
     /**
      * @ORM\ManyToOne(targetEntity="Platform", inversedBy="virtualMachines")
-     * @ORM\JoinColumn(name="platform_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="platform_id", referencedColumnName="id", nullable=false)
      */
     private $platform;
+
+    /**
+     * @ORM\OneToMany(targetEntity="VmMetadata", mappedBy="vm")
+     */
+    private $metadata;
+
+
+    public function __construct()
+    {
+        $this->metadata = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -56,5 +67,15 @@ class Vm
     public function getPlatform()
     {
         return $this->platform;
+    }
+
+    /**
+     * Get metadata
+     *
+     * @return ArrayCollection
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
     }
 }
