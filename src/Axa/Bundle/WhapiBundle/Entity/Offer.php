@@ -23,6 +23,21 @@ class Offer
     use TimestampableEntity;
 
     /**
+     * Small platform code
+     */
+    const SMALL_PLATFORM_CODE    = 'SP';
+
+    /**
+     * Medium platform code
+     */
+    const MEDIUM_PLATFORM_CODE   = 'MP';
+
+    /**
+     * Large platform code
+     */
+    const LARGE_PLATFORM_CODE    = 'LP';
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -34,7 +49,7 @@ class Offer
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=10)
+     * @ORM\Column(name="code", type="string", unique=true, length=10)
      */
     private $code;
 
@@ -44,6 +59,13 @@ class Offer
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cpu", type="integer")
+     */
+    private $cpu;
 
     /**
      * @var integer
@@ -128,6 +150,29 @@ class Offer
     }
 
     /**
+     * Set cpu
+     *
+     * @param $cpu
+     * @return Offer
+     */
+    public function setCpu($cpu)
+    {
+        $this->cpu = $cpu;
+
+        return $this;
+    }
+
+    /**
+     * Get cpu
+     *
+     * @return int
+     */
+    public function getCpu()
+    {
+        return $this->cpu;
+    }
+
+    /**
      * Set memory
      *
      * @param integer $memory
@@ -181,5 +226,16 @@ class Offer
     public function getPlatforms()
     {
         return $this->platforms;
+    }
+
+    public function toArray()
+    {
+        return array(
+            "code"      => $this->getCode(),
+            "name"      => $this->getName(),
+            "cpu"       => $this->getCpu(),
+            "memory"    => $this->getMemory(),
+            "storage"  => $this->getStorage()
+        );
     }
 }

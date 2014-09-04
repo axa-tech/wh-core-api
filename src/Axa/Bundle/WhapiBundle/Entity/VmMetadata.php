@@ -19,7 +19,7 @@ class VmMetadata
      * updates createdAt, updatedAt fields
      */
     use TimestampableEntity;
-    
+
     /**
      * @var integer
      *

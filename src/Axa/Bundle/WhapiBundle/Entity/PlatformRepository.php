@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlatformRepository extends EntityRepository
 {
+    /**
+     * Persist the Platform
+     *
+     * @param Platform $platform
+     */
+    public function persist(Platform $platform)
+    {
+        $this->_em->persist($platform);
+        $this->_em->flush();
+    }
 }

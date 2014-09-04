@@ -3,6 +3,7 @@
 namespace Axa\Bundle\WhapiBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Axa\Bundle\WhapiBundle\Exception\DuplicateUserException;
 
 /**
  * UserRepository
@@ -12,4 +13,37 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    /**
+     * Persist the User
+     *
+     * @param User $user
+     */
+    public function persist(User $user)
+    {
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
+
+    /**
+     * Find or Create a new User
+     *
+     * @param string $userEmail the user email
+     * @param boolean $persist whether the user should be persisted or not. Default to false
+     * @return User|null|object
+     * @throws \Axa\Bundle\WhapiBundle\Exception\DuplicateUserException
+     */
+    public function findOneByEmailOrCreate($userEmail, $persist = false)
+    {
+        if (! $user = $this->findOneBy(array("email" => $userEmail))) {
+            $user = new User();
+            $user->setEmail($userEmail)
+                ->setUid($userEmail . '-' . uniqid());
+        }
+
+        if ($persist) {
+            $this->persist($user);
+        }
+
+        return $user;
+    }
 }
