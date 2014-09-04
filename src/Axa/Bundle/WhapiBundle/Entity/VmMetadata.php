@@ -3,6 +3,8 @@
 namespace Axa\Bundle\WhapiBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * VmMetadata
@@ -12,6 +14,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class VmMetadata
 {
+    /**
+     * Hook timestampable behavior
+     * updates createdAt, updatedAt fields
+     */
+    use TimestampableEntity;
+    
     /**
      * @var integer
      *
