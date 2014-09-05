@@ -10,8 +10,8 @@ class PlatformController extends Controller
     public function createAction()
     {
         $data = $this->getRequest()->request->all();
-        //$platformService = $this->get('axa_whapi.platform');
-        //$plaform = $platformService->create($data['userEmail'], $data['offerCode']);
+        $platformService = $this->get('axa_whapi.platform');
+        $platformService->create($data['userEmail'], $data['offerCode']);
 
         return new JsonResponse($data);
 
