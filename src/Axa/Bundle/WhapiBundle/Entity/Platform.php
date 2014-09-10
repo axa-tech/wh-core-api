@@ -30,6 +30,14 @@ class Platform
      */
     private $id;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="remoteId", type="integer", unique=true, nullable=false)
+     *
+     */
+    private $remoteId;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="platforms")
@@ -64,6 +72,29 @@ class Platform
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set remoteId
+     *
+     * @param $remoteId
+     * @return $this
+     */
+    public function setRemoteId($remoteId)
+    {
+        $this->remoteId = $remoteId;
+
+        return $this;
+    }
+
+    /**
+     * Get remoteId
+     *
+     * @return integer
+     */
+    public function getRemoteId()
+    {
+        return $this->remoteId;
     }
 
     /**
