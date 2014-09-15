@@ -80,7 +80,7 @@ fos_rest:
             html: true
     format_listener:
         rules:
-            - { path: ^/, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }
+            - { path: ^/, priorities: [ json, xml, html ], fallback_format: ~, prefer_extension: true }
     exception:
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
@@ -91,6 +91,9 @@ fos_rest:
     access_denied_listener:
         json: true
     body_listener: true
+    routing_loader:
+        default_format: json
+        #include_format: false
 
 fos_http_cache:
     cache_control:
@@ -111,4 +114,24 @@ stof_doctrine_extensions:
     orm:
         default:
             timestampable: true
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     %rabbitmq_host%
+            port:     %rabbitmq_port%
+            user:     %rabbitmq_user%
+            password: %rabbitmq_password%
+            vhost:    %rabbitmq_vhost%
+            lazy:     false
+    producers:
+        #upload_picture:
+        #    connection:       default
+        #    exchange_options: {name: 'upload-picture', type: direct}
+    consumers:
+        #upload_picture:
+        #    connection:       default
+        #    exchange_options: {name: 'upload-picture', type: direct}
+        #    queue_options:    {name: 'upload-picture'}
+        #    callback:         upload_picture_service
 
