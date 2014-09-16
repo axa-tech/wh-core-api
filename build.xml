@@ -14,6 +14,7 @@
         <mkdir dir="${build}/reports"/>
         <mkdir dir="${build}/reports/coverage"/>
         <mkdir dir="${build}/logs"/>
+        <mkdir dir="${basedir}/app/logs/apache"/>
     </target>
 
     <target name="init-composer" description="Init composer component">

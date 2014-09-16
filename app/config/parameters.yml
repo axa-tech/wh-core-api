@@ -18,6 +18,3 @@ parameters:
     rabbitmq_password: guest
     rabbitmq_vhost: "/"
     rabbitmq_lazy: false
-
-
-

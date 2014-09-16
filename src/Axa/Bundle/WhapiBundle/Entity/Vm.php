@@ -32,7 +32,6 @@ class Vm
 
     /**
      * @ORM\ManyToOne(targetEntity="Platform", inversedBy="virtualMachines")
-     * @ORM\JoinColumn(name="platform_id", referencedColumnName="id", nullable=false)
      */
     private $platform;
 

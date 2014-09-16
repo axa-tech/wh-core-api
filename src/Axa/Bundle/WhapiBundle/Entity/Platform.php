@@ -33,7 +33,7 @@ class Platform
     /**
      * @var integer
      *
-     * @ORM\Column(name="remoteId", type="integer", unique=true, nullable=false)
+     * @ORM\Column(name="remoteId", type="string", nullable=true)
      *
      */
     private $remoteId;
@@ -53,7 +53,7 @@ class Platform
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Vm", mappedBy="platform")
+     * @ORM\OneToMany(targetEntity="Vm", mappedBy="platform", cascade={"persist"})
      */
     private $virtualMachines;
 

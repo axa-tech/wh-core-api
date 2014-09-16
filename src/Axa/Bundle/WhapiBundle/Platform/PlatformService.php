@@ -6,6 +6,7 @@ use Axa\Bundle\WhapiBundle\Entity\OfferRepository;
 use Axa\Bundle\WhapiBundle\Entity\Platform;
 use Axa\Bundle\WhapiBundle\Entity\PlatformRepository;
 use Axa\Bundle\WhapiBundle\Entity\UserRepository;
+use Axa\Bundle\WhapiBundle\Entity\Vm;
 use Axa\Bundle\WhapiBundle\Exception\OfferNotFoundException;
 
 class PlatformService
@@ -55,8 +56,58 @@ class PlatformService
         $platform->setUser($user)
                 ->setOffer($offer);
 
+        $this->createVirtualMachines($platform);
         $this->platformRepository->persist($platform);
 
         return $platform;
+    }
+
+    /**
+     * Create two virtual machines for the given platform
+     *
+     * @param Platform $platform
+     */
+    private function createVirtualMachines(Platform $platform)
+    {
+        $vm1 = new Vm();
+        $vm2 = new Vm();
+        $vm1->setPlatform($platform);
+        $vm2->setPlatform($platform);
+        $platform->getVirtualMachines()->add($vm1);
+        $platform->getVirtualMachines()->add($vm2);
+    }
+
+    /**
+     * Builds and returns the amqp message content that will be sent to the broker in order to create the platform
+     *
+     * @param Platform $platform
+     * @return array
+     */
+    public function getAmqpCreateMessage(Platform $platform)
+    {
+        $offer = $platform->getOffer();
+        $vms = array();
+
+        $vmTemplate = array(
+            'cpu'       => $offer->getCpu(),
+            'memory'    => $offer->getMemory(),
+            'storage'   => $offer->getStorage(),
+        );
+
+        foreach($platform->getVirtualMachines() as $virtualMachine) {
+
+            $vmMetaData = array(
+                'id'        => $virtualMachine->getId(),
+                'adminPass' => 'defaultAdminPass',
+                'name'      => 'the vm name',
+            );
+
+            $vms[] = array_merge($vmMetaData, $vmTemplate);
+        }
+
+        return array(
+            'platformId'    => "1234",
+            'vms'           => $vms
+        );
     }
 }

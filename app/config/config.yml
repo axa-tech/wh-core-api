@@ -93,7 +93,7 @@ fos_rest:
     body_listener: true
     routing_loader:
         default_format: json
-        #include_format: false
+        include_format: false
 
 fos_http_cache:
     cache_control:
@@ -125,13 +125,13 @@ old_sound_rabbit_mq:
             vhost:    %rabbitmq_vhost%
             lazy:     false
     producers:
-        #upload_picture:
-        #    connection:       default
-        #    exchange_options: {name: 'upload-picture', type: direct}
+        create_platform:
+            connection:       default
+            exchange_options: {name: 'create-platform', type: direct}
     consumers:
-        #upload_picture:
-        #    connection:       default
-        #    exchange_options: {name: 'upload-picture', type: direct}
-        #    queue_options:    {name: 'upload-picture'}
-        #    callback:         upload_picture_service
+        create_platform:
+            connection:       default
+            exchange_options: {name: 'create-platform', type: direct}
+            queue_options:    {name: 'create-platform'}
+            callback:         axa_whapi_create_platform_service
 

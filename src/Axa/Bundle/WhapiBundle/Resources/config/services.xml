@@ -7,6 +7,7 @@
         <parameter key="axa_whapi.user_repository.class">Axa\Bundle\WhapiBundle\Entity\UserRepository</parameter>
         <parameter key="axa_whapi.platform_repository.class">Axa\Bundle\WhapiBundle\Entity\PlatformRepository</parameter>
         <parameter key="axa_whapi.offer_repository.class">Axa\Bundle\WhapiBundle\Entity\OfferRepository</parameter>
+        <parameter key="axa_whapi_create_platform.class">Axa\Bundle\WhapiBundle\Consumer\CreatePlatformConsumer</parameter>
     </parameters>
     <services>
         <service id="axa_whapi_repositories.user"
@@ -32,5 +33,7 @@
             <argument type="service" id="axa_whapi_repositories.platform" />
             <argument type="service" id="axa_whapi_repositories.offer" />
         </service>
+
+        <service id="axa_whapi_create_platform_service" class="%axa_whapi_create_platform.class%"></service>
     </services>
 </container>
