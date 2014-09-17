@@ -1,0 +1,12 @@
+axa_whapi_platform_new:
+    pattern:  /platforms
+    defaults: { _controller: AxaWhapiBundle:Platform:post, _format: ~ }
+    requirements:
+        _method: POST
+
+axa_whapi_platform_get:
+    pattern:  /platforms/{id}
+    defaults: { _controller: AxaWhapiBundle:Platform:get, _format: ~ }
+    requirements:
+        _method: GET
+        id: "\d+"

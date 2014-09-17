@@ -25,7 +25,18 @@
         "friendsofsymfony/http-cache-bundle": "~1.0",
         "willdurand/hateoas-bundle": "1.0.*@dev",
         "hautelook/templated-uri-bundle": "~2.0",
-        "willdurand/rest-extra-bundle": "~1.0"
+        "willdurand/rest-extra-bundle": "~1.0",
+        "stof/doctrine-extensions-bundle": "1.1.*@dev",
+        "oldsound/rabbitmq-bundle": "1.3.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.2.4",
+        "phing/phing": "dev-master",
+        "sebastian/phpcpd": "2.0.*@dev",
+        "phpdocumentor/phpdocumentor": "dev-master",
+        "phpmd/phpmd": "dev-master",
+        "phploc/phploc": "2.1.*@dev",
+        "instaclick/php-code-sniffer": "dev-master"
     },
     "conflict": {
         "symfony/routing": "2.4.1"
