@@ -135,3 +135,9 @@ old_sound_rabbit_mq:
             queue_options:    {name: 'create-platform'}
             callback:         axa_whapi_create_platform_service
 
+nelmio_api_doc:
+    name:                 'AXA Web Hosting API documentation'
+    sandbox:
+        enabled:              true
+        endpoint:             null
+        accept_type:          null

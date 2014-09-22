@@ -1,7 +1,7 @@
-axa_whapi:
-    resource: "@AxaWhapiBundle/Resources/config/routing.yml"
-    prefix:   /
-
 NelmioApiDocBundle:
   resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-  prefix:   /api/doc
+  prefix:   /
+
+axa_whapi:
+    resource: "@AxaWhapiBundle/Resources/config/routing.yml"
+    prefix:   /rest
