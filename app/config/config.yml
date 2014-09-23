@@ -82,30 +82,6 @@ fos_rest:
         rules:
             - { path: ^/rest/, priorities: [ json, xml, html ], fallback_format: ~, prefer_extension: true }
             - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: html, prefer_extension: true }
-
-            Lukas Kahwe Smith lsmith77 closed this on 2 Jan
-            loostro
-            loostro commented on 2 Jan
-
-            @lsmith77 thanks, it works now :)
-            Lukas Kahwe Smith
-            Owner
-            lsmith77 commented on 2 Jan
-
-            I opened a ticket to automate adding a rule specifically for the profiler:
-            #652
-            Eduardo Oliveira entering referenced this issue on 11 Feb
-            Closed
-            IE8 content negotation #682
-            Abdoulaye BARRY
-
-                Write
-                Preview
-
-            Parsed as Markdown Edit in fullscreen
-
-            Attach images by dragging & dropping or selecting them.
-
     exception:
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
