@@ -3,12 +3,12 @@
 namespace Axa\Bundle\WhapiBundle\Tests\Platform;
 
 
-use Axa\Bundle\WhapiBundle\Platform\PlatformService;
+use Axa\Bundle\WhapiBundle\Service\PlatformService;
 
 class PlatformServiceTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Axa\Bundle\WhapiBundle\Platform\PlatformService
+     * @var \Axa\Bundle\WhapiBundle\Service\PlatformService
      */
     protected $service;
 

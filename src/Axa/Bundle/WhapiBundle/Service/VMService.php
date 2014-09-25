@@ -7,7 +7,7 @@ use Axa\Bundle\WhapiBundle\Entity\VmRepository;
 use Axa\Bundle\WhapiBundle\Utility\Request;
 
 
-class VMService
+class VmService
 {
 
     use Request;
