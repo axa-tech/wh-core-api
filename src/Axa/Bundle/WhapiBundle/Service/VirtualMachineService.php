@@ -7,10 +7,10 @@ use Axa\Bundle\WhapiBundle\Entity\VmRepository;
 use Axa\Bundle\WhapiBundle\Utility\Request;
 
 
-class VmService
+class VirtualMachineService
 {
-
     use Request;
+
     /**
      * @var \Axa\Bundle\WhapiBundle\Entity\VmRepository
      */

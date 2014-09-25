@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
-        <parameter key="axa_whapi.vm.class">Axa\Bundle\WhapiBundle\Service\VmService</parameter>
+        <parameter key="axa_whapi.vm.class">Axa\Bundle\WhapiBundle\Service\VirtualMachineService</parameter>
         <parameter key="axa_whapi.platform.class">Axa\Bundle\WhapiBundle\Service\PlatformService</parameter>
         <parameter key="axa_whapi.user_repository.class">Axa\Bundle\WhapiBundle\Entity\UserRepository</parameter>
         <parameter key="axa_whapi.platform_repository.class">Axa\Bundle\WhapiBundle\Entity\PlatformRepository</parameter>
