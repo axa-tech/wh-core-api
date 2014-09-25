@@ -22,4 +22,78 @@ class PlatformRepository extends EntityRepository
         $this->_em->persist($platform);
         $this->_em->flush();
     }
+
+    /**
+     * Try to update a metadata if it exists or create it if not
+     *
+     * @param Platform $platform
+     * @param $name
+     * @param $value
+     */
+    public function updateOrCreateMetadata(Platform $platform, $name, $value)
+    {
+        $connexion = $this->getEntityManager()->getConnection();
+
+        $m = $connexion->fetchAssoc(
+            'SELECT * FROM platformmetadata WHERE name = ? AND platform_id = ?', array($name, $platform->getId())
+        );
+
+        $date = new \DateTime();
+        $date = $date->format('Y-m-d H:i:s');
+        if (!$m) {
+            $connexion->insert('platformmetadata',
+                array(
+                    'name'=>        $name,
+                    'value'=>       $value,
+                    'platform_id'=> $platform->getId(),
+                    'createdAt'=>   $date,
+                    'updatedAt'=>   $date,
+                )
+            );
+
+            return;
+        } elseif ($m["value"] != $value) {
+            $connexion->update('platformmetadata', array('value' => $value, 'updatedAt' => $date), array('name' => $name));
+        }
+
+        return;
+    }
+
+    /**
+     * Get all platform's metadata
+     *
+     * @param Platform $platform
+     * @return array
+     */
+    public function getMetadata(Platform $platform)
+    {
+        $connexion = $this->getEntityManager()->getConnection();
+
+        if( $metadata = $connexion->fetchAll('SELECT * FROM platformmetadata WHERE platform_id = ?', array($platform->getId()))) {
+            return $metadata;
+        };
+
+        return array();
+    }
+
+    /**
+     * Returns a formatted metadata array
+     *
+     * @param Platform $platform
+     * @return array
+     */
+    public function getFormattedMetadata(Platform $platform)
+    {
+        $connexion = $this->getEntityManager()->getConnection();
+
+        $metadata = $connexion->fetchAll('SELECT name, value FROM platformmetadata WHERE platform_id = ?', array($platform->getId()));
+
+        $response = array();
+        foreach($metadata as $m) {
+            $response[$m['name']] = $m['value'];
+        }
+
+        return $response;
+    }
 }
+

@@ -4,8 +4,8 @@ namespace Axa\Bundle\WhapiBundle\Exception;
 
 class PlatformNotFoundException extends \Exception
 {
-    public function __construct($message)
+    public function __construct($platformId)
     {
-        parent::__construct("Platform '%s' not found", $message);
+        parent::__construct(sprintf("Platform '%d' not found", $platformId));
     }
 }

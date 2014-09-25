@@ -8,6 +8,7 @@ use Axa\Bundle\WhapiBundle\Entity\PlatformRepository;
 use Axa\Bundle\WhapiBundle\Entity\UserRepository;
 use Axa\Bundle\WhapiBundle\Entity\Vm;
 use Axa\Bundle\WhapiBundle\Exception\OfferNotFoundException;
+use Axa\Bundle\WhapiBundle\Exception\PlatformNotFoundException;
 
 class PlatformService
 {
@@ -54,7 +55,8 @@ class PlatformService
 
         $platform = new Platform();
         $platform->setUser($user)
-                ->setOffer($offer);
+                ->setOffer($offer)
+                ->setStatus(Platform::STATUS_IN_PROGRESS);
 
         $this->createVirtualMachines($platform);
         $this->platformRepository->persist($platform);
@@ -109,5 +111,45 @@ class PlatformService
             'platformId'    => "1234",
             'vms'           => $vms
         );
+    }
+
+    /**
+     * Update a platform metada
+     *
+     * @param Platform $platform
+     * @param array $metadata
+     */
+    public function update(Platform $platform, array $metadata)
+    {
+        if(isset($metadata['id'])) {
+            unset($metadata['id']);
+        }
+
+        foreach($metadata as $name => $value) {
+            $this->platformRepository->updateOrCreateMetadata($platform, $name, $value);
+        }
+    }
+
+    /**
+     * Get a array formatted platform data
+     *
+     * @param $id the platform id
+     * @returns array
+     * @throws PlatformNotFoundException
+     */
+    public function find($id)
+    {
+        if (!$platform = $this->platformRepository->find($id)) {
+            throw new PlatformNotFoundException($id);
+        }
+
+        $data = array(
+            'id'        => $platform->getId(),
+            'userId'    => $platform->getUser()->getId(),
+            'offerId'   => $platform->getOffer()->getId(),
+            'status'    => $platform->getStatus()
+        );
+
+        return array_merge($data, $this->platformRepository->getFormattedMetadata($platform));
     }
 }

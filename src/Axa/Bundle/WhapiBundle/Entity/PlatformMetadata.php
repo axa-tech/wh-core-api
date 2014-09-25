@@ -7,12 +7,12 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * VmMetadata
+ * PlatformMetadata
  *
- * @ORM\Table(name="vmmetadata")
- * @ORM\Entity(repositoryClass="Axa\Bundle\WhapiBundle\Entity\VmMetadataRepository")
+ * @ORM\Table(name="platformmetadata")
+ * @ORM\Entity(repositoryClass="Axa\Bundle\WhapiBundle\Entity\PlatformMetadataRepository")
  */
-class VmMetadata
+class PlatformMetadata
 {
     /**
      * Hook timestampable behavior
@@ -44,10 +44,9 @@ class VmMetadata
     private $value;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Vm", inversedBy="metadata")
-     * @ORM\JoinColumn(name="vm_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Platform", inversedBy="metadata")
      */
-    private $vm;
+    private $platform;
 
 
     /**
@@ -61,26 +60,26 @@ class VmMetadata
     }
 
     /**
-     * Set vm
+     * Set platform
      *
-     * @param string $vm
-     * @return VmMetadata
+     * @param Platform platform
+     * @return PlatformMetadata
      */
-    public function setVm($vm)
+    public function setPlatform(Platform $platform)
     {
-        $this->vm = $vm;
+        $this->platform = $platform;
 
         return $this;
     }
 
     /**
-     * Get vm
+     * Get platform
      *
-     * @return string 
+     * @return Platform
      */
-    public function getVm()
+    public function getPlatform()
     {
-        return $this->vm;
+        return $this->platform;
     }
 
     /**
@@ -127,25 +126,5 @@ class VmMetadata
     public function getValue()
     {
         return $this->value;
-    }
-
-    /**
-     * Displays the name and value properties
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->name . " : " . $this->value;
-    }
-
-    /**
-     * Returns the name and value properties in an array format
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return array("name" => $this->name, "value" => $this->value);
     }
 }

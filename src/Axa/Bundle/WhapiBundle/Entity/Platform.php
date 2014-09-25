@@ -15,6 +15,17 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Platform
 {
+    CONST STATUS_IN_PROGRESS = 'IN_PROGRESS';
+    CONST STATUS_DONE = 'DONE';
+    CONST STATUS_ERROR = 'ERROR';
+
+    public static $statuses = array(
+
+        self::STATUS_IN_PROGRESS,
+        self::STATUS_DONE,
+        self::STATUS_ERROR
+    );
+
     /**
      * Hook timestampable behavior
      * updates createdAt, updatedAt fields
@@ -31,12 +42,12 @@ class Platform
     private $id;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="remoteId", type="string", nullable=true)
+     * @ORM\Column(name="status", type="string", nullable=false)
      *
      */
-    private $remoteId;
+    private $status;
 
 
     /**
@@ -57,10 +68,16 @@ class Platform
      */
     private $virtualMachines;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PlatformMetadata", mappedBy="platform", cascade={"persist"})
+     */
+    private $metadata;
+
 
     public function __construct()
     {
         $this->virtualMachines = new ArrayCollection();
+        $this->metadata = new ArrayCollection();
     }
 
 
@@ -75,26 +92,30 @@ class Platform
     }
 
     /**
-     * Set remoteId
+     * Set status
      *
-     * @param $remoteId
+     * @param $status
      * @return $this
+     * @throws
      */
-    public function setRemoteId($remoteId)
+    public function setStatus($status)
     {
-        $this->remoteId = $remoteId;
+        if(! in_array($status, self::$statuses)) {
+            throw \InvalidArgumentException(sprintf("The status %s is invalid", $status));
+        }
+        $this->status = $status;
 
         return $this;
     }
 
     /**
-     * Get remoteId
+     * Get status
      *
-     * @return integer
+     * @return string
      */
-    public function getRemoteId()
+    public function getStatus()
     {
-        return $this->remoteId;
+        return $this->status;
     }
 
     /**
@@ -134,10 +155,13 @@ class Platform
      * Set offer
      *
      * @param Offer $offer
+     * @return Platform
      */
     public function setOffer(Offer $offer)
     {
         $this->offer = $offer;
+
+        return $this;
     }
 
     /**
@@ -148,5 +172,25 @@ class Platform
     public function getOffer()
     {
         return $this->offer;
+    }
+
+    /**
+     * Get metadata
+     *
+     * @return ArrayCollection
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * Returns the Platform's metadata
+     *
+     * @return array
+     */
+    public function getMetadataToArray()
+    {
+        return $metadata = $this->getMetadata()->getValues();
     }
 }

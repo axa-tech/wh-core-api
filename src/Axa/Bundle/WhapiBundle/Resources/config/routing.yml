@@ -10,3 +10,10 @@ axa_whapi_platform_get:
     requirements:
         _method: GET
         id: "\d+"
+
+axa_whapi_platform_update:
+    pattern:  /platforms/{id}
+    defaults: { _controller: AxaWhapiBundle:Platform:update, _format: ~ }
+    requirements:
+        _method: PUT
+        id: "\d+"
