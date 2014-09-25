@@ -81,6 +81,13 @@ class Offer
      */
     private $storage;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbVm", type="integer")
+     */
+    private $nbVm;
+
 
     /**
      * @ORM\OneToMany(targetEntity="Platform", mappedBy="offer")
@@ -216,6 +223,29 @@ class Offer
     public function getStorage()
     {
         return $this->storage;
+    }
+
+    /**
+     * Set Nb Vm
+     *
+     * @param integer $nbVm
+     * @return Offer
+     */
+    public function setNbVm($nbVm)
+    {
+        $this->nbVm = $nbVm;
+
+        return $this;
+    }
+
+    /**
+     * Get Nb vm
+     *
+     * @return integer
+     */
+    public function getNbVm()
+    {
+        return $this->nbVm;
     }
 
     /**

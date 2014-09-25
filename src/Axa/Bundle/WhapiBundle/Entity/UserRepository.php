@@ -36,8 +36,7 @@ class UserRepository extends EntityRepository
     {
         if (! $user = $this->findOneBy(array("email" => $userEmail))) {
             $user = new User();
-            $user->setEmail($userEmail)
-                ->setUid($userEmail . '-' . uniqid());
+            $user->setEmail($userEmail);
         }
 
         if ($persist) {

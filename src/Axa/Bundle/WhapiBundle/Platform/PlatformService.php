@@ -71,12 +71,13 @@ class PlatformService
      */
     private function createVirtualMachines(Platform $platform)
     {
-        $vm1 = new Vm();
-        $vm2 = new Vm();
-        $vm1->setPlatform($platform);
-        $vm2->setPlatform($platform);
-        $platform->getVirtualMachines()->add($vm1);
-        $platform->getVirtualMachines()->add($vm2);
+        $nbVm = $platform->getOffer()->getNbVm();
+        while($nbVm) {
+            $vm = new Vm();
+            $vm->setPlatform($platform);
+            $platform->getVirtualMachines()->add($vm);
+            $nbVm--;
+        }
     }
 
     /**
@@ -98,18 +99,19 @@ class PlatformService
 
         foreach($platform->getVirtualMachines() as $virtualMachine) {
 
-            $vmMetaData = array(
+            $vmData = array(
                 'id'        => $virtualMachine->getId(),
                 'adminPass' => 'defaultAdminPass',
                 'name'      => 'the vm name',
             );
 
-            $vms[] = array_merge($vmMetaData, $vmTemplate);
+            $vms[] = array_merge($vmData, $vmTemplate);
         }
 
         return array(
-            'platformId'    => "1234",
-            'vms'           => $vms
+            'platformId'        => $platform->getId(),
+            'platformRemoteId'  => "9",
+            'vms'               => $vms
         );
     }
 

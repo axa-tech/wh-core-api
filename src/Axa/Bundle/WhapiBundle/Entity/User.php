@@ -33,13 +33,6 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="uid", type="string", unique=true, length=255)
-     */
-    private $uid;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="email", type="string", unique=true, length=255)
      */
     private $email;
@@ -64,29 +57,6 @@ class User
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set uid
-     *
-     * @param string $uid
-     * @return User
-     */
-    public function setUid($uid)
-    {
-        $this->uid = $uid;
-
-        return $this;
-    }
-
-    /**
-     * Get uid
-     *
-     * @return string 
-     */
-    public function getUid()
-    {
-        return $this->uid;
     }
 
     /**
