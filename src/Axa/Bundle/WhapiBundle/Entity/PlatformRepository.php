@@ -35,13 +35,13 @@ class PlatformRepository extends EntityRepository
         $connexion = $this->getEntityManager()->getConnection();
 
         $m = $connexion->fetchAssoc(
-            'SELECT * FROM platformmetadata WHERE name = ? AND platform_id = ?', array($name, $platform->getId())
+            'SELECT * FROM platform_metadata WHERE name = ? AND platform_id = ?', array($name, $platform->getId())
         );
 
         $date = new \DateTime();
         $date = $date->format('Y-m-d H:i:s');
         if (!$m) {
-            $connexion->insert('platformmetadata',
+            $connexion->insert('platform_metadata',
                 array(
                     'name'=>        $name,
                     'value'=>       $value,
@@ -53,7 +53,7 @@ class PlatformRepository extends EntityRepository
 
             return;
         } elseif ($m["value"] != $value) {
-            $connexion->update('platformmetadata', array('value' => $value, 'updatedAt' => $date), array('name' => $name));
+            $connexion->update('platform_metadata', array('value' => $value, 'updatedAt' => $date), array('name' => $name));
         }
 
         return;
@@ -69,7 +69,7 @@ class PlatformRepository extends EntityRepository
     {
         $connexion = $this->getEntityManager()->getConnection();
 
-        if( $metadata = $connexion->fetchAll('SELECT * FROM platformmetadata WHERE platform_id = ?', array($platform->getId()))) {
+        if( $metadata = $connexion->fetchAll('SELECT * FROM platform_metadata WHERE platform_id = ?', array($platform->getId()))) {
             return $metadata;
         };
 
@@ -86,7 +86,7 @@ class PlatformRepository extends EntityRepository
     {
         $connexion = $this->getEntityManager()->getConnection();
 
-        $metadata = $connexion->fetchAll('SELECT name, value FROM platformmetadata WHERE platform_id = ?', array($platform->getId()));
+        $metadata = $connexion->fetchAll('SELECT name, value FROM platform_metadata WHERE platform_id = ?', array($platform->getId()));
 
         $response = array();
         foreach($metadata as $m) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Axa\Bundle\WhapiBundle\Platform;
+namespace Axa\Bundle\WhapiBundle\Service;
 
 use Axa\Bundle\WhapiBundle\Entity\OfferRepository;
 use Axa\Bundle\WhapiBundle\Entity\Platform;
@@ -9,9 +9,12 @@ use Axa\Bundle\WhapiBundle\Entity\UserRepository;
 use Axa\Bundle\WhapiBundle\Entity\Vm;
 use Axa\Bundle\WhapiBundle\Exception\OfferNotFoundException;
 use Axa\Bundle\WhapiBundle\Exception\PlatformNotFoundException;
+use Axa\Bundle\WhapiBundle\Utility\Request;
 
 class PlatformService
 {
+    use Request;
+
     /**
      * @var \Axa\Bundle\WhapiBundle\Entity\UserRepository
      */
@@ -123,9 +126,7 @@ class PlatformService
      */
     public function update(Platform $platform, array $metadata)
     {
-        if(isset($metadata['id'])) {
-            unset($metadata['id']);
-        }
+        $metadata = $this->sanitizeData($metadata);
 
         foreach($metadata as $name => $value) {
             $this->platformRepository->updateOrCreateMetadata($platform, $name, $value);

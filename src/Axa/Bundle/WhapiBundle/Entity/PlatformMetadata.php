@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * PlatformMetadata
  *
- * @ORM\Table(name="platformmetadata")
+ * @ORM\Table(name="platform_metadata")
  * @ORM\Entity(repositoryClass="Axa\Bundle\WhapiBundle\Entity\PlatformMetadataRepository")
  */
 class PlatformMetadata

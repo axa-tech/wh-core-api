@@ -1,3 +1,4 @@
+# Platform ressource
 axa_whapi_platform_new:
     pattern:  /platforms
     defaults: { _controller: AxaWhapiBundle:Platform:post, _format: ~ }
@@ -14,6 +15,15 @@ axa_whapi_platform_get:
 axa_whapi_platform_update:
     pattern:  /platforms/{id}
     defaults: { _controller: AxaWhapiBundle:Platform:update, _format: ~ }
+    requirements:
+        _method: PUT
+        id: "\d+"
+
+
+# Vm ressource
+axa_whapi_vm_update:
+    pattern:  /vm/{id}
+    defaults: { _controller: AxaWhapiBundle:VM:update, _format: ~ }
     requirements:
         _method: PUT
         id: "\d+"

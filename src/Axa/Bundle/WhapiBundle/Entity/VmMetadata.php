@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * VmMetadata
  *
- * @ORM\Table(name="vmmetadata")
+ * @ORM\Table(name="vm_metadata")
  * @ORM\Entity(repositoryClass="Axa\Bundle\WhapiBundle\Entity\VmMetadataRepository")
  */
 class VmMetadata
@@ -127,25 +127,5 @@ class VmMetadata
     public function getValue()
     {
         return $this->value;
-    }
-
-    /**
-     * Displays the name and value properties
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->name . " : " . $this->value;
-    }
-
-    /**
-     * Returns the name and value properties in an array format
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return array("name" => $this->name, "value" => $this->value);
     }
 }
