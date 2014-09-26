@@ -40,10 +40,22 @@ class Vm
      */
     private $metadata;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Docker", inversedBy="vms")
+     * @ORM\JoinColumn(name="offer_id", referencedColumnName="id", nullable=false)
+     */
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Docker", inversedBy="vms")
+     * @ORM\JoinTable(name="vms_dockers")
+     **/
+    private $dockers;
+
 
     public function __construct()
     {
         $this->metadata = new ArrayCollection();
+        $this->dockers = new ArrayCollection();
     }
 
     /**
@@ -75,6 +87,30 @@ class Vm
     public function getPlatform()
     {
         return $this->platform;
+    }
+
+    /**
+     * Add a docker
+     *
+     * @param Docker $docker
+     * @return Vm
+     */
+    public function addDocker(Docker $docker)
+    {
+        $docker->addVm($this);
+        $this->dockers->add($docker);
+
+        return $this;
+    }
+
+    /**
+     * Returns all vm's dockers
+     *
+     * @return ArrayCollection
+     */
+    public function getDockers()
+    {
+        return $this->dockers;
     }
 
     /**
