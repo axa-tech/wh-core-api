@@ -2,7 +2,7 @@
 
 namespace Axa\Bundle\WhapiBundle\Exception;
 
-class NotFoundEntityException extends \Exception
+class EntityNotFoundException extends \Exception
 {
     public function __construct($entityName, $entityId)
     {

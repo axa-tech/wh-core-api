@@ -14,6 +14,18 @@ class VmRepository extends EntityRepository
 {
 
     /**
+     * Persist a Vm
+     *
+     * @param Vm $vm
+     */
+    public function persist(Vm $vm)
+    {
+        $this->_em->persist($vm);
+        $this->_em->flush();
+    }
+
+
+    /**
      * Try to update a metadata if it exists or create it if not
      *
      * @param Vm $vm
