@@ -31,6 +31,20 @@ class Vm
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="remote_id", type="string", nullable=true)
+     */
+    private $remoteId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ip", type="string", nullable=true)
+     */
+    private $ip;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Platform", inversedBy="virtualMachines")
      */
     private $platform;
@@ -52,6 +66,14 @@ class Vm
     private $dockers;
 
 
+    /**
+     * @var Vm
+     *
+     * @ORM\OneToOne(targetEntity="VmQueue", mappedBy="vm", cascade={"persist"})
+     */
+    private $queue;
+
+
     public function __construct()
     {
         $this->metadata = new ArrayCollection();
@@ -66,6 +88,52 @@ class Vm
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set remoteId
+     *
+     * @param $remoteId
+     * @return $this
+     */
+    public function setRemoteId($remoteId)
+    {
+        $this->remoteId = $remoteId;
+
+        return $this;
+    }
+
+    /**
+     * Get remoteId
+     *
+     * @return string
+     */
+    public function getRemoteId()
+    {
+        return $this->remoteId;
+    }
+
+    /**
+     * Set ip
+     *
+     * @param $ip
+     * @return $this
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    /**
+     * Get ip
+     *
+     * @return string
+     */
+    public function getIp()
+    {
+        return $this->ip;
     }
 
     /**
@@ -121,6 +189,29 @@ class Vm
     public function getMetadata()
     {
         return $this->metadata;
+    }
+
+    /**
+     * Set queue
+     *
+     * @param VmQueue $queue
+     * @return Vm
+     */
+    public function setQueue(VmQueue $queue)
+    {
+        $this->queue = $queue;
+
+        return $this;
+    }
+
+    /**
+     * Get queue
+     *
+     * @return VmQueue
+     */
+    public function getQueue()
+    {
+        return $this->queue;
     }
 
     /**

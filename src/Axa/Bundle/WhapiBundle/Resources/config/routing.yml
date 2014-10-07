@@ -27,3 +27,12 @@ axa_whapi_vm_update:
     requirements:
         _method: PUT
         id: "\d+"
+
+
+# VmQueue ressource
+axa_whapi_vmqueue_get:
+    pattern:  /vmqueue/{ip}
+    defaults: { _controller: AxaWhapiBundle:VmQueue:get, _format: ~ }
+    requirements:
+        _method: GET
+

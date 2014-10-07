@@ -129,6 +129,10 @@ old_sound_rabbit_mq:
         create_platform:
             connection:       default
             exchange_options: {name: 'create-platform', type: direct}
+        vm_queue:
+            connection:       default
+            exchange_options: {name: 'vm-queue', type: direct}
+            auto_setup_fabric: false
     consumers:
         create_platform:
             connection:       default

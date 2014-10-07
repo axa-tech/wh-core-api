@@ -43,6 +43,7 @@
         </service>
         <service id="axa_whapi.vm" class="%axa_whapi.vm.class%">
             <argument type="service" id="axa_whapi_repositories.vm" />
+            <argument type="service" id="old_sound_rabbit_mq.vm_queue_producer" />
         </service>
 
         <service id="axa_whapi_consumers.create_platform" class="%axa_whapi.consumers.create_platform.class%"></service>
