@@ -31,17 +31,60 @@ class VirtualMachineService
     }
 
     /**
-     * Update or create vm's metadata
+     * Update Vm's and VmMetadata properties
      *
      * @param Vm $vm
      * @param array $metadata
      */
     public function update(Vm $vm, array $metadata)
     {
-        if(isset($metadata['platform_id'])) {
+        $this->updateVm($vm, $metadata);
+        $this->updateOrCreateMetadata($vm, $metadata);
+    }
+
+    /**
+     * Update Vm Properties
+     *
+     * @param Vm $vm
+     * @param array $metadata
+     */
+    private function updateVm(Vm $vm, array & $metadata)
+    {
+        if (isset($metadata['platform_id'])) {
             unset($metadata['platform_id']);
         }
 
+        if (isset($metadata['instanceName'])) {
+            $vm->setInstanceName($metadata['instanceName']);
+            unset($metadata['instanceName']);
+        }
+
+        if (isset($metadata['providerId'])) {
+            $vm->setRemoteId($metadata['providerId']);
+            unset($metadata['providerId']);
+        }
+
+        if (isset($metadata['ipAddress'])) {
+            $vm->setIpAdresse($metadata['ipAddress']);
+            unset($metadata['ipAddress']);
+        }
+
+        if (isset($metadata['status'])) {
+            $vm->setStatus($metadata['status']);
+            unset($metadata['status']);
+        }
+
+        $this->vmRepository->persist($vm);
+    }
+
+    /**
+     * Update or create VmMetadata
+     *
+     * @param Vm $vm
+     * @param array $metadata
+     */
+    private function updateOrCreateMetadata(Vm $vm, array $metadata)
+    {
         $metadata = $this->sanitizeData($metadata);
 
         foreach($metadata as $name => $value) {
@@ -58,7 +101,7 @@ class VirtualMachineService
     public function createQueue(Vm $vm)
     {
         if (! $vm->getQueue()) {
-            $queueName = $vm->getPlatform()->getId() . "_" . $vm->getId() . "_" . $vm->getRemoteId();
+            $queueName = $vm->getPlatform()->getId() . "_" . $vm->getId() . "_" . $vm->getName();
 
             $this->baseProducer->setExchangeOptions(array(
                 "name"  => $queueName,

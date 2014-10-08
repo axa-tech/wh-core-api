@@ -15,6 +15,17 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Vm
 {
+    CONST STATUS_IN_PROGRESS = 'IN_PROGRESS';
+    CONST STATUS_DONE = 'DONE';
+    CONST STATUS_ERROR = 'ERROR';
+
+    public static $statuses = array(
+
+        self::STATUS_IN_PROGRESS,
+        self::STATUS_DONE,
+        self::STATUS_ERROR
+    );
+
     /**
      * Hook timestampable behavior
      * updates createdAt, updatedAt fields
@@ -40,9 +51,24 @@ class Vm
     /**
      * @var string
      *
-     * @ORM\Column(name="ip", type="string", nullable=true)
+     * @ORM\Column(name="ipAddress", type="string", nullable=true)
      */
-    private $ip;
+    private $ipAddress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="instanceName", type="string", nullable=true)
+     */
+    private $instanceName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", nullable=false)
+     *
+     */
+    private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="Platform", inversedBy="virtualMachines")
@@ -114,26 +140,76 @@ class Vm
     }
 
     /**
-     * Set ip
+     * Set ipAddress
      *
-     * @param $ip
+     * @param $ipAddress
      * @return $this
      */
-    public function setIp($ip)
+    public function setIpAddress($ipAddress)
     {
-        $this->ip = $ip;
+        $this->ipAddress = $ipAddress;
 
         return $this;
     }
 
     /**
-     * Get ip
+     * Get ipAddress
      *
      * @return string
      */
-    public function getIp()
+    public function getIpAddress()
     {
         return $this->ip;
+    }
+
+    /**
+     * Set instanceName
+     *
+     * @param $instanceName
+     * @return $this
+     */
+    public function setInstanceName($instanceName)
+    {
+        $this->instanceName = $instanceName;
+
+        return $this;
+    }
+
+    /**
+     * Get instanceName
+     *
+     * @return string
+     */
+    public function getInstanceName()
+    {
+        return $this->instanceName;
+    }
+
+    /**
+     * Set status
+     *
+     * @param $status
+     * @return $this
+     * @throws
+     */
+    public function setStatus($status)
+    {
+        if(! in_array($status, self::$statuses)) {
+            throw new \InvalidArgumentException(sprintf("The status: %s is invalid! Use DONE, IN_PROGRESS or ERROR ", $status));
+        }
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Axa\Bundle\WhapiBundle\Controller;
 
+use Axa\Bundle\WhapiBundle\Exception\RuntimeException;
 use FOS\RestBundle\Controller\FOSRestController,
     FOS\RestBundle\Controller\Annotations as Rest;
 

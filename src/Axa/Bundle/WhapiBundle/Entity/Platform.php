@@ -44,6 +44,13 @@ class Platform
     /**
      * @var string
      *
+     * @ORM\Column(name="name", type="string", nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="status", type="string", nullable=false)
      *
      */
@@ -89,6 +96,29 @@ class Platform
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param $name
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
