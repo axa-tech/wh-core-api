@@ -65,7 +65,7 @@ class VirtualMachineService
         }
 
         if (isset($metadata['ipAddress'])) {
-            $vm->setIpAdresse($metadata['ipAddress']);
+            $vm->setIpAddress($metadata['ipAddress']);
             unset($metadata['ipAddress']);
         }
 
@@ -75,6 +75,9 @@ class VirtualMachineService
         }
 
         $this->vmRepository->persist($vm);
+        $vm->getPlatform()->updateStatus();
+
+        $this->vmRepository->persist($vm->getPlatform());
     }
 
     /**
@@ -101,7 +104,7 @@ class VirtualMachineService
     public function createQueue(Vm $vm)
     {
         if (! $vm->getQueue()) {
-            $queueName = $vm->getPlatform()->getId() . "_" . $vm->getId() . "_" . $vm->getName();
+            $queueName = $vm->getPlatform()->getId() . "_" . $vm->getId() . "_" . $vm->getInstanceName();
 
             $this->baseProducer->setExchangeOptions(array(
                 "name"  => $queueName,

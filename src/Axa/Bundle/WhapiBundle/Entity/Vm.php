@@ -71,7 +71,7 @@ class Vm
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Platform", inversedBy="virtualMachines")
+     * @ORM\ManyToOne(targetEntity="Platform", inversedBy="virtualMachines", cascade={"all"})
      */
     private $platform;
 
@@ -159,7 +159,7 @@ class Vm
      */
     public function getIpAddress()
     {
-        return $this->ip;
+        return $this->ipAddress;
     }
 
     /**

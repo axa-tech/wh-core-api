@@ -36,10 +36,10 @@ class VmQueueController extends FOSRestController
      */
     public function getAction($ip)
     {
-        $vm = $this->getRepository()->findOneBy(array("ip"=>$ip));
+        $vm = $this->getRepository()->findOneBy(array("ipAddress"=>$ip));
 
         if (!$vm) {
-            throw $this->createNotFoundException(sprintf("Vm with Ip %s does not exist", $ip));
+            throw $this->createNotFoundException(sprintf("Vm with ipAddress %s does not exist", $ip));
         }
 
         if (! $queue = $vm->getQueue()) {
@@ -47,7 +47,7 @@ class VmQueueController extends FOSRestController
         }
 
         return array(
-            "vmIp"      => $vm->getIp(),
+            "vmIp"      => $vm->getIpAddress(),
             "vmId"      => $vm->getRemoteId(),
             "vmQueue"   => $vm->getQueue()->getName()
         );

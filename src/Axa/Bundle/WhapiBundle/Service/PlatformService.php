@@ -43,10 +43,11 @@ class PlatformService
      *
      * @param $userEmail
      * @param $offerCode
+     * @param $platformName
      * @return Platform
      * @throws \Axa\Bundle\WhapiBundle\Exception\OfferNotFoundException
      */
-    public function create($userEmail, $offerCode)
+    public function create($userEmail, $offerCode, $platformName)
     {
         $user = $this->userRepository->findOneByEmailOrCreate($userEmail, true);
 
@@ -59,6 +60,7 @@ class PlatformService
         $platform = new Platform();
         $platform->setUser($user)
                 ->setOffer($offer)
+                ->setName($platformName)
                 ->setStatus(Platform::STATUS_IN_PROGRESS);
 
         $this->createVirtualMachines($platform);
@@ -68,7 +70,7 @@ class PlatformService
     }
 
     /**
-     * Create two virtual machines for the given platform
+     * Create virtual machines for the given platform
      *
      * @param Platform $platform
      */
@@ -77,6 +79,7 @@ class PlatformService
         $nbVm = $platform->getOffer()->getNbVm();
         while($nbVm) {
             $vm = new Vm();
+            $vm->setStatus(Vm::STATUS_IN_PROGRESS);
             $vm->setPlatform($platform);
             $platform->getVirtualMachines()->add($vm);
             $nbVm--;
@@ -147,10 +150,11 @@ class PlatformService
         }
 
         $data = array(
-            'id'        => $platform->getId(),
-            'userId'    => $platform->getUser()->getId(),
-            'offerId'   => $platform->getOffer()->getId(),
-            'status'    => $platform->getStatus()
+            'id'        =>  $platform->getId(),
+            'name'      =>  $platform->getName(),
+            'userId'    =>  $platform->getUser()->getId(),
+            'offerCode' =>  $platform->getOffer()->getCode(),
+            'status'    =>  $platform->getStatus()
         );
 
         return array_merge($data, $this->platformRepository->getFormattedMetadata($platform));

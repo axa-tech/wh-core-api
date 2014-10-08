@@ -16,11 +16,11 @@ class VmRepository extends EntityRepository
     /**
      * Persist a Vm
      *
-     * @param Vm $vm
+     * @param  $entity
      */
-    public function persist(Vm $vm)
+    public function persist($entity)
     {
-        $this->_em->persist($vm);
+        $this->_em->persist($entity);
         $this->_em->flush();
     }
 

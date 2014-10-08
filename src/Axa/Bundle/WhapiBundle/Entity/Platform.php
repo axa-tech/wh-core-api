@@ -44,7 +44,7 @@ class Platform
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", nullable=true)
+     * @ORM\Column(name="name", type="string", nullable=false)
      */
     private $name;
 
@@ -222,5 +222,25 @@ class Platform
     public function getMetadataToArray()
     {
         return $metadata = $this->getMetadata()->getValues();
+    }
+
+    /**
+     * Update the platform status according to vm's status
+     */
+    public function updateStatus()
+    {
+       foreach($this->getVirtualMachines() as $vm) {
+           if ($vm->getStatus() === Vm::STATUS_ERROR) {
+               $this->setStatus(self::STATUS_ERROR);
+
+               return;
+           } elseif ($vm->getStatus() === Vm::STATUS_IN_PROGRESS) {
+               $this->setStatus(self::STATUS_IN_PROGRESS);
+
+               return;
+           } else {
+               $this->setStatus(Vm::STATUS_DONE);
+           }
+       }
     }
 }

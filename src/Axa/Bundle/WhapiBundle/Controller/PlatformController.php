@@ -60,9 +60,13 @@ class PlatformController extends FOSRestController
             return View::create("offerCode is required", 400);
         }
 
+        if (! $platformName = $request->get('name')) {
+            return View::create("name is required", 400);
+        }
+
         try {
             $platformService = $this->get('axa_whapi.platform');
-            $platform = $platformService->create($userEmail, $offerCode);
+            $platform = $platformService->create($userEmail, $offerCode, $platformName);
             $amqpMessage = $platformService->getAmqpCreateMessage($platform);
             $createPlatformProducer = $this->get('old_sound_rabbit_mq.create_platform_producer');
             $createPlatformProducer->setContentType('application/json');
@@ -154,10 +158,11 @@ class PlatformController extends FOSRestController
             throw new NotFoundHttpException(sprintf("Platform %d was not found", $id));
         }
 
-        $response = new JsonResponse();
-        $response->setStatusCode(204);
         $service = $this->get('axa_whapi.platform');
         $service->update($platform, $request->request->all());
+
+        $response = new JsonResponse();
+        $response->setStatusCode(204);
 
         return $response;
     }
