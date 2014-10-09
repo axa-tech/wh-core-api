@@ -36,3 +36,9 @@ axa_whapi_vmqueue_get:
     requirements:
         _method: GET
 
+# Stack ressource
+axa_whapi_stack_get_all:
+    pattern:  /stacks
+    defaults: { _controller: AxaWhapiBundle:Stack:getAll, _format: ~ }
+    requirements:
+        _method: GET
