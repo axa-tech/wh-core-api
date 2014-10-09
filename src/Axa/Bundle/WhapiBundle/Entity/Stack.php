@@ -2,6 +2,7 @@
 
 namespace Axa\Bundle\WhapiBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -63,7 +64,15 @@ class Stack
      */
     private $repository;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Application", mappedBy="stack")
+     */
+    private $applications;
 
+    public function __construct()
+    {
+        $this->applications = new ArrayCollection();
+    }
 
     /**
      * Get id

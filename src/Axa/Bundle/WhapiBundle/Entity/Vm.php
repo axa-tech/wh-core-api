@@ -86,11 +86,9 @@ class Vm
      */
 
     /**
-     * @ORM\ManyToMany(targetEntity="Docker", inversedBy="vms")
-     * @ORM\JoinTable(name="vms_dockers")
-     **/
-    private $dockers;
-
+     * @ORM\OneToMany(targetEntity="Container", mappedBy="vm", cascade={"persist"})
+     */
+    private $containers;
 
     /**
      * @var Vm
@@ -103,7 +101,7 @@ class Vm
     public function __construct()
     {
         $this->metadata = new ArrayCollection();
-        $this->dockers = new ArrayCollection();
+        $this->containers = new ArrayCollection();
     }
 
     /**
@@ -233,29 +231,6 @@ class Vm
         return $this->platform;
     }
 
-    /**
-     * Add a docker
-     *
-     * @param Docker $docker
-     * @return Vm
-     */
-    public function addDocker(Docker $docker)
-    {
-        $docker->addVm($this);
-        $this->dockers->add($docker);
-
-        return $this;
-    }
-
-    /**
-     * Returns all vm's dockers
-     *
-     * @return ArrayCollection
-     */
-    public function getDockers()
-    {
-        return $this->dockers;
-    }
 
     /**
      * Get metadata
@@ -306,5 +281,29 @@ class Vm
         }
 
         return $response;
+    }
+
+    /**
+     * Get containers
+     *
+     * @return ArrayCollection
+     */
+    public function getContainers()
+    {
+        return $this->containers;
+    }
+
+    /**
+     * Add a new container to the vm
+     *
+     * @param Container $container
+     * @return $this
+     */
+    public function addContainer(Container $container)
+    {
+        $container->setVm($this);
+        $this->containers->add($container);
+
+        return $this;
     }
 }

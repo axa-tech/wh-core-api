@@ -76,6 +76,12 @@ class Platform
     private $virtualMachines;
 
     /**
+     * @ORM\OneToMany(targetEntity="Application", mappedBy="platform", cascade={"persist"})
+     */
+    private $applications;
+
+
+    /**
      * @ORM\OneToMany(targetEntity="PlatformMetadata", mappedBy="platform", cascade={"persist"})
      */
     private $metadata;
@@ -85,6 +91,7 @@ class Platform
     {
         $this->virtualMachines = new ArrayCollection();
         $this->metadata = new ArrayCollection();
+        $this->applications = new ArrayCollection();
     }
 
 
@@ -242,5 +249,15 @@ class Platform
                $this->setStatus(Vm::STATUS_DONE);
            }
        }
+    }
+
+    /**
+     * Get Applications
+     *
+     * @return ArrayCollection
+     */
+    public function getApplications()
+    {
+        return $this->applications;
     }
 }
