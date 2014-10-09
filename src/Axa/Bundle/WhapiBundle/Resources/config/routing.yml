@@ -42,3 +42,11 @@ axa_whapi_stack_get_all:
     defaults: { _controller: AxaWhapiBundle:Stack:getAll, _format: ~ }
     requirements:
         _method: GET
+
+# Application ressource
+axa_whapi_application_new:
+    pattern:  /applications
+    defaults: { _controller: AxaWhapiBundle:Application:post, _format: ~ }
+    requirements:
+        _method: POST
+
