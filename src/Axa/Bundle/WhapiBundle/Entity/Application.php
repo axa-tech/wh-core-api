@@ -69,6 +69,13 @@ class Application
      */
     private $topology;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", nullable=false)
+     */
+    private $name;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="Stack", inversedBy="applications")
@@ -178,6 +185,29 @@ class Application
     public function getTopology()
     {
         return $this->topology;
+    }
+
+    /**
+     * Set name
+     *
+     * @param $name
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**

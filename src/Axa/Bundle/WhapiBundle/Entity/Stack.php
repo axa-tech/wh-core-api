@@ -53,7 +53,7 @@ class Stack
     /**
      * @var boolean
      * @Expose
-     * @ORM\Column(name="isWeb", type="boolean")
+     * @ORM\Column(name="is_web", type="boolean")
      */
     private $isWeb;
 

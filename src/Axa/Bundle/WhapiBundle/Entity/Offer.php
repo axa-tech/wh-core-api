@@ -84,7 +84,7 @@ class Offer
     /**
      * @var integer
      *
-     * @ORM\Column(name="nbVm", type="integer")
+     * @ORM\Column(name="nb_vm", type="integer")
      */
     private $nbVm;
 

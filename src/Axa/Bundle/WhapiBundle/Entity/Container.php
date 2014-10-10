@@ -49,6 +49,13 @@ class Container
     private $port;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="memory_limit", type="integer", length=10)
+     */
+    private $memoryLimit;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=255)
@@ -58,7 +65,7 @@ class Container
     /**
      * @var string
      *
-     * @ORM\Column(name="remoteId", type="string", length=255)
+     * @ORM\Column(name="remote_id", type="string", length=255)
      */
     private $remoteId;
 

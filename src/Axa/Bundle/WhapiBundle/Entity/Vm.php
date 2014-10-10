@@ -51,14 +51,14 @@ class Vm
     /**
      * @var string
      *
-     * @ORM\Column(name="ipAddress", type="string", nullable=true)
+     * @ORM\Column(name="ip_address", type="string", nullable=true)
      */
     private $ipAddress;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="instanceName", type="string", nullable=true)
+     * @ORM\Column(name="instance_name", type="string", nullable=true)
      */
     private $instanceName;
 
