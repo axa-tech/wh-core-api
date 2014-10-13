@@ -41,6 +41,12 @@ class PlatformController extends FOSRestController
      *          "dataType"="string",
      *          "required"=true,
      *          "description"="The offer code. Accepted value [SP, MP, LP]"
+     *      },
+     *      {
+     *          "name"="name",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "description"="The platform name"
      *      }
      *  },
      *  statusCodes={
@@ -125,6 +131,27 @@ class PlatformController extends FOSRestController
         }
     }
 
+
+    /**
+     * List All platforms
+     * @Rest\View
+     * @return array
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Axa\Bundle\WhapiBundle\Exception\RuntimeException;
+     * @ApiDoc(
+     *  description="Get all platforms",
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         400="Returned when request was bad formatted",
+     *         500="Unexpected error"
+     *     }
+     * )
+     */
+    public function getAllAction()
+    {
+        return $this->getRepository()->findAll();
+    }
+
     /**
      * Update a platform
      * @Rest\View
@@ -165,5 +192,10 @@ class PlatformController extends FOSRestController
         $response->setStatusCode(204);
 
         return $response;
+    }
+
+    private function getRepository()
+    {
+        return $this->getDoctrine()->getManager()->getRepository("AxaWhapiBundle:Platform");
     }
 }

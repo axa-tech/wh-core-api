@@ -12,6 +12,12 @@ axa_whapi_platform_get:
         _method: GET
         id: "\d+"
 
+axa_whapi_platform_get_all:
+    pattern:  /platforms
+    defaults: { _controller: AxaWhapiBundle:Platform:getAll, _format: ~ }
+    requirements:
+        _method: GET
+
 axa_whapi_platform_update:
     pattern:  /platforms/{id}
     defaults: { _controller: AxaWhapiBundle:Platform:update, _format: ~ }

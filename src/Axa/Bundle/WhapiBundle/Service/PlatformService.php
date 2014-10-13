@@ -149,14 +149,6 @@ class PlatformService
             throw new PlatformNotFoundException($id);
         }
 
-        $data = array(
-            'id'        =>  $platform->getId(),
-            'name'      =>  $platform->getName(),
-            'userId'    =>  $platform->getUser()->getId(),
-            'offerCode' =>  $platform->getOffer()->getCode(),
-            'status'    =>  $platform->getStatus()
-        );
-
-        return array_merge($data, $this->platformRepository->getFormattedMetadata($platform));
+        return $platform;
     }
 }

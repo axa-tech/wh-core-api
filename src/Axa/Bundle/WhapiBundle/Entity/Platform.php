@@ -6,12 +6,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Platform
  *
  * @ORM\Table(name="platform")
  * @ORM\Entity(repositoryClass="Axa\Bundle\WhapiBundle\Entity\PlatformRepository")
+ * @ExclusionPolicy("all")
  */
 class Platform
 {
@@ -38,6 +43,7 @@ class Platform
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -45,6 +51,7 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="name", type="string", nullable=false)
+     * @Expose
      */
     private $name;
 
@@ -52,7 +59,7 @@ class Platform
      * @var string
      *
      * @ORM\Column(name="status", type="string", nullable=false)
-     *
+     * @Expose
      */
     private $status;
 
@@ -60,6 +67,7 @@ class Platform
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="platforms")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @Expose
      */
     private $user;
 
