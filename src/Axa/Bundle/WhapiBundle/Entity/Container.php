@@ -65,7 +65,7 @@ class Container
     /**
      * @var string
      *
-     * @ORM\Column(name="remote_id", type="string", length=255)
+     * @ORM\Column(name="remote_id", type="string", length=255, nullable=true)
      */
     private $remoteId;
 
@@ -113,6 +113,29 @@ class Container
     public function getPort()
     {
         return $this->port;
+    }
+
+    /**
+     * Set memory limit
+     *
+     * @param $limit
+     * @return Container
+     */
+    public function setMemoryLimit($limit)
+    {
+        $this->memoryLimit = $limit;
+
+        return $this;
+    }
+
+    /**
+     * Get memory limit
+     *
+     * @return int
+     */
+    public function getMemoryLimit()
+    {
+        return $this->memoryLimit;
     }
 
     /**

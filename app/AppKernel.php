@@ -31,7 +31,8 @@ class AppKernel extends Kernel
             new Bazinga\Bundle\RestExtraBundle\BazingaRestExtraBundle(),
             new Axa\Bundle\WhapiBundle\AxaWhapiBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle()
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

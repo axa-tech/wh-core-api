@@ -12,4 +12,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class ApplicationRepository extends EntityRepository
 {
+    public function persist(Application $application)
+    {
+        $this->_em->persist($application);
+        $this->_em->flush();
+    }
 }

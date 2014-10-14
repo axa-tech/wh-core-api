@@ -18,3 +18,4 @@ parameters:
     rabbitmq_password: guest
     rabbitmq_vhost: "/"
     rabbitmq_lazy: false
+    axa_whapi.container.default_memory: 256

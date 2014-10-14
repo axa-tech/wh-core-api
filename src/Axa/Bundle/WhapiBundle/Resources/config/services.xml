@@ -5,10 +5,12 @@
     <parameters>
         <parameter key="axa_whapi.vm.class">Axa\Bundle\WhapiBundle\Service\VirtualMachineService</parameter>
         <parameter key="axa_whapi.platform.class">Axa\Bundle\WhapiBundle\Service\PlatformService</parameter>
+        <parameter key="axa_whapi.application.class">Axa\Bundle\WhapiBundle\Service\ApplicationService</parameter>
         <parameter key="axa_whapi.user_repository.class">Axa\Bundle\WhapiBundle\Entity\UserRepository</parameter>
         <parameter key="axa_whapi.platform_repository.class">Axa\Bundle\WhapiBundle\Entity\PlatformRepository</parameter>
         <parameter key="axa_whapi.offer_repository.class">Axa\Bundle\WhapiBundle\Entity\OfferRepository</parameter>
         <parameter key="axa_whapi.vm_repository.class">Axa\Bundle\WhapiBundle\Entity\VmRepository</parameter>
+        <parameter key="axa_whapi.application_repository.class">Axa\Bundle\WhapiBundle\Entity\ApplicationRepository</parameter>
         <parameter key="axa_whapi.consumers.create_platform.class">Axa\Bundle\WhapiBundle\Consumer\CreatePlatformConsumer</parameter>
     </parameters>
     <services>
@@ -36,6 +38,12 @@
                  factory-method="getRepository">
             <argument>AxaWhapiBundle:Offer</argument>
         </service>
+        <service id="axa_whapi_repositories.application"
+                 class="%axa_whapi.application_repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>AxaWhapiBundle:Application</argument>
+        </service>
         <service id="axa_whapi.platform" class="%axa_whapi.platform.class%">
             <argument type="service" id="axa_whapi_repositories.user" />
             <argument type="service" id="axa_whapi_repositories.platform" />
@@ -45,7 +53,14 @@
             <argument type="service" id="axa_whapi_repositories.vm" />
             <argument type="service" id="old_sound_rabbit_mq.vm_queue_producer" />
         </service>
+        <service id="axa_whapi.application" class="%axa_whapi.application.class%">
+            <argument type="service" id="axa_whapi_repositories.application" />
+            <argument>%axa_whapi.container.default_memory%</argument>
+            <argument>%axa_whapi.container.port_min%</argument>
+            <argument>%axa_whapi.container.port_max%</argument>
+        </service>
 
-        <service id="axa_whapi_consumers.create_platform" class="%axa_whapi.consumers.create_platform.class%"></service>
+
+        <service id="axa_whapi_consumers.create_platform" class="%axa_whapi.consumers.create_platform.class%"/>
     </services>
 </container>

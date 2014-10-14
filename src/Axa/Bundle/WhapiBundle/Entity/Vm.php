@@ -306,4 +306,40 @@ class Vm
 
         return $this;
     }
+
+    /**
+     * Get the vm's allowed memory size in mega octet format
+     *
+     * @return int
+     */
+    public function getAllowedMemory()
+    {
+        return $this->getPlatform()->getOffer()->getMemory() * 1024;
+    }
+
+    /**
+     * Get the total used memory
+     *
+     * @return int
+     */
+    public function getUsedMemory()
+    {
+        $usedMemory = 0;
+
+        foreach ($this->getContainers() as $container) {
+            $usedMemory+= $container->getMemoryLimit();
+        }
+
+        return $usedMemory;
+    }
+
+    /**
+     * Return the available vm's memory size
+     *
+     * @return int
+     */
+    public function getAvailableMemory()
+    {
+        return $this->getAllowedMemory() - $this->getUsedMemory();
+    }
 }

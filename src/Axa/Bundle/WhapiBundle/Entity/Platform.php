@@ -20,12 +20,14 @@ use JMS\Serializer\Annotation\VirtualProperty;
  */
 class Platform
 {
+    CONST STATUS_TO_DO = 'TO_DO';
     CONST STATUS_IN_PROGRESS = 'IN_PROGRESS';
     CONST STATUS_DONE = 'DONE';
     CONST STATUS_ERROR = 'ERROR';
 
     public static $statuses = array(
 
+        self::STATUS_TO_DO,
         self::STATUS_IN_PROGRESS,
         self::STATUS_DONE,
         self::STATUS_ERROR
@@ -84,7 +86,7 @@ class Platform
     private $virtualMachines;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application", mappedBy="platform", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Application", mappedBy="platform")
      */
     private $applications;
 
@@ -267,5 +269,21 @@ class Platform
     public function getApplications()
     {
         return $this->applications;
+    }
+
+    /**
+     * Returns all ports used by applications in this platform
+     *
+     * @return array
+     */
+    public function getApplicationsPorts()
+    {
+        $ports = array();
+
+        foreach($this->getApplications() as $application) {
+            $ports[] = array_merge($ports, $application->getContainersPorts());
+        }
+
+        return $ports;
     }
 }

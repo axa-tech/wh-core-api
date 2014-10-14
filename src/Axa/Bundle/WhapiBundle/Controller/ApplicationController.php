@@ -2,8 +2,10 @@
 
 namespace Axa\Bundle\WhapiBundle\Controller;
 
-use Axa\Bundle\WhapiBundle\Exception\OfferNotFoundException;
+use Axa\Bundle\WhapiBundle\Exception\LogicException;
 
+use Axa\Bundle\WhapiBundle\Exception\OutOfMemoryException;
+use Axa\Bundle\WhapiBundle\Exception\OutOfPortLimitException;
 use FOS\RestBundle\Controller\FOSRestController,
     FOS\RestBundle\View\View,
     FOS\RestBundle\Controller\Annotations as Rest;
@@ -13,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ApplicationController extends FOSRestController
 {
@@ -46,10 +47,16 @@ class ApplicationController extends FOSRestController
      *          "description"="The applications's name"
      *      },
      *      {
+     *          "name"="url",
+     *          "dataType"="string",
+     *          "required"=true,
+     *          "description"="The application's url"
+     *      },
+     *      {
      *          "name"="topology",
      *          "dataType"="int",
-     *          "required"=false,
-     *          "description"="How many instance to create, default is 1"
+     *          "required"=true,
+     *          "description"="How many instance to create"
      *      }
      *  },
      *  statusCodes={
@@ -62,6 +69,8 @@ class ApplicationController extends FOSRestController
      */
     public function postAction(Request $request)
     {
+        $manager = $this->getDoctrine()->getManager();
+
         if (! $platform_id = $request->get('platform_id')) {
             return View::create("platform_id is required", 400);
         }
@@ -70,15 +79,22 @@ class ApplicationController extends FOSRestController
             return View::create("stack_id is required", 400);
         }
 
-        if (! $topology = $request->get('name')) {
+        if (! $name = $request->get('name')) {
             return View::create("name is required", 400);
+        }
+
+        if (! $url = $request->get('url')) {
+            return View::create("url is required", 400);
+        }
+
+        $url = $this->get('slugify')->slugify($url);
+        if ($manager->getRepository("AxaWhapiBundle:Application")->findOneBy(array("url"=>$url))) {
+            return View::create("The url $url already exists", 409);
         }
 
         if (! $topology = $request->get('topology')) {
             return View::create("topology is required", 400);
         }
-
-        $manager = $this->getDoctrine()->getManager();
 
         if (! $platform = $manager->getRepository("AxaWhapiBundle:Platform")->find($platform_id)) {
             throw $this->createNotFoundException("Platform $platform_id does not exist");
@@ -89,19 +105,28 @@ class ApplicationController extends FOSRestController
         }
 
         try {
+
+            $service = $this->get("axa_whapi.application");
+            $application = $service->create($platform, $stack, $name, $url, $topology);
             $response = new Response();
             $response->setStatusCode(201);
             $response->headers->set('Location',
                 $this->generateUrl(
-                    'axa_whapi_platform_get', array('id' => $platform->getId()),
+                    'axa_whapi_platform_get', array('id' => $application->getId()),
                     true
                 )
             );
 
             return $response;
 
-        } catch(OfferNotFoundException $e) {
-            throw new NotFoundHttpException($e->getMessage());
+        } catch(OutOfMemoryException $e) {
+            return View::create("Not enough memory", 403);
+        } catch(OutOfPortLimitException $e) {
+            return View::create("No port available", 403);
+        } catch(LogicException $e) {
+            return View::create($e->getMessage());
+        } catch(\Exception $e) {
+            return View::create("Unexpected internal server error", 500);
         }
     }
 }
